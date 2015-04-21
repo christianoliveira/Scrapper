@@ -1,11 +1,12 @@
 <?php 
 
-	function getSERP($keyword, $country, $language, $googledomain){
-		$url = "http://www.".$googledomain."/search?q=".$keyword."&hl=".$language."&gl=".$country."&pws=0";
+	function getSERP($keyword, $country, $language, $domain){
+		$url = "http://www.".$domain."/search?q=".$keyword."&hl=".$language."&gl=".$country."&pws=0";
 		$html = file_get_contents($url);
+		return $html;
 	}
 
-	function saveSerp($html, $keyword, $country, $language){
+	function saveSERP($html, $keyword, $country, $language){
 		$fecha = New DateTime();
 		$fileName = $keyword."_".$language."_".$country."_".$fecha->getTimeStamp();
 		file_put_contents($fichero, $html);
@@ -16,14 +17,7 @@
 	$country = "es";
 	$language = "es";
 	$domain = "google.es";
-	$url = "http://www.".$domain."/search?q=".$keyword."&hl=".$language."&gl=".$country."&pws=0";
-
-	print $url."<br />";
-
-	$html = file_get_contents($url);
-
-	$fecha = New DateTime();
-
-	$fichero = $keyword."_".$language."_".$country."_".$fecha->getTimeStamp();
-	file_put_contents($fichero, $html);
+	
+	$html = getSERP($keyword, $country, $language, $domain);
+	saveSERP($html, $keyword, $country, $language);
  ?>
